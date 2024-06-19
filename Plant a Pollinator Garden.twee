@@ -1,0 +1,982 @@
+:: StoryTitle
+Plant a Pollinator Garden
+
+
+:: StoryData
+{
+  "ifid": "93E9EBEB-BA93-4BE4-B245-F77CB7466DB2",
+  "format": "Harlowe",
+  "format-version": "3.3.9",
+  "start": "Planting a Garden",
+  "zoom": 1
+}
+
+
+:: Black Cohosh {"position":"600,525","size":"100,100"}
+Great job! By planting black cohosh you helped bees, flies, and butterflies. 
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Butterfly</title>
+
+	<style type="text/css">
+		div {border:0px solid #FF0000;}
+
+		#butterfly_wrapper
+		{
+			width:150px;
+			height:150px;
+			position:absolute;
+		}
+
+		.leftwings,.rightwings
+		{
+			position:absolute;
+			width:50%;
+			height:100%;
+			top:0;
+		}
+
+		.leftwings
+		{
+			left:0;
+		}
+
+		.rightwings
+		{
+			right:0;
+		}
+
+		.perspective
+		{
+			position:relative;
+			width:100%;
+			height:50%;
+			-webkit-perspective:300px;
+			-webkit-perspective-origin:50% 50%;			
+			perspective:150px;
+			perspective-origin:50% 50%;
+		}
+
+		.upperwing,.lowerwing
+		{
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#FF4400+0,FFEE00+50,FF4400+100 */
+			background: #FF4400; /* Old browsers */
+			background: -moz-radial-gradient(center, ellipse cover, #FF4400 0%, #FFEE00 50%, #FF4400 100%); /* FF3.6-15 */
+			background: -webkit-radial-gradient(center, ellipse cover, #FF4400 0%,#FFEE00 50%,#FF4400 100%); /* Chrome10-25,Safari5.1-6 */
+			background: radial-gradient(ellipse at center, #FF4400 0%,#FFEE00 50%,#FF4400 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FF4400', endColorstr='#FF4400',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+			-webkit-animation-duration: 0.3s;
+			-webkit-animation-iteration-count: infinite;
+			-webkit-animation-direction: alternate;
+			animation-duration: 0.3s;
+			animation-iteration-count: infinite;
+			animation-direction: alternate;
+		}
+
+		.upperwing
+		{
+			position:absolute;
+			width:100%;
+			height:100%;
+		}
+
+		.upperwing_left
+		{
+			border-top-left-radius: 10%;
+			border-top-right-radius: 80%;
+			border-bottom-right-radius: 0%;
+			border-bottom-left-radius: 30%;
+			-webkit-transform-origin:100% 50%;
+			transform-origin:100% 50%;
+			-webkit-animation-name: movewing_left;
+			animation-name: movewing_left;
+		}
+
+		.upperwing_right
+		{
+			border-top-left-radius: 80%;
+			border-top-right-radius: 10%;
+			border-bottom-right-radius: 30%;
+			border-bottom-left-radius: 0%;
+			-webkit-transform-origin:0% 50%;
+			transform-origin:0% 50%;
+			-webkit-animation-name: movewing_right;
+			animation-name: movewing_right;
+		}
+
+		.lowerwing
+		{
+			position:absolute;
+			top:0;
+			width:80%;
+			height:80%;
+		}
+
+		.lowerwing_left
+		{
+			right:0;
+			border-top-left-radius: 30%;
+			border-top-right-radius: 0%;
+			border-bottom-right-radius: 80%;
+			border-bottom-left-radius: 10%;
+			-webkit-transform-origin:100% 50%;
+			transform-origin:100% 50%;
+			-webkit-animation-name: movewing_left;
+			animation-name: movewing_left;
+		}
+
+		.lowerwing_right
+		{
+			left:0;
+			border-top-left-radius: 0%;
+			border-top-right-radius: 30%;
+			border-bottom-right-radius: 10%;
+			border-bottom-left-radius: 80%;
+			-webkit-transform-origin:0% 50%;
+			transform-origin:0% 50%;
+			-webkit-animation-name: movewing_right;
+			animation-name: movewing_right;
+		}
+
+		@-webkit-keyframes movewing_left{
+			from {-webkit-transform:rotateX(0deg);}
+			to {-webkit-transform:rotateY(65deg);}
+		}
+			
+		@keyframes movewing_left{
+			from {transform:rotateY(0deg);}
+			to {transform:rotateY(65deg);}
+		}
+
+		@-webkit-keyframes movewing_right{
+			from {-webkit-transform:rotateX(0deg);}
+			to {-webkit-transform:rotateY(-65deg);}
+		}
+			
+		@keyframes movewing_right{
+			from {transform:rotateY(0deg);}
+			to {transform:rotateY(-65deg);}
+		}
+	</style>
+
+	<script>
+		var x=0;
+		var y=0;
+		var size=0;
+		var rotation=0;
+		var transitiontimer;
+		var wingtimer;
+		var nexttimer;
+
+		function flutter(vartimer)
+		{
+			var wrapper=document.getElementById("butterfly_wrapper");
+
+			nexttimer=vartimer+(generaterandomno(-200,200));
+			nexttimer=(nexttimer<1500||nexttimer>3000?1500:nexttimer);
+
+			x+=generaterandomno(-80,80);
+			y+=generaterandomno(-80,80);
+
+			x=(x<20?30:x);
+			y=(y<20?30:y);
+			x=(x>250?240:x);
+			y=(y>250?240:y);
+
+			size+=generaterandomno(-10,10);
+			size=(size<10?20:size);
+			size=(size>50?40:size);
+
+			rotation+=generaterandomno(-10,10);
+			rotation=(rotation<-20?0:rotation);
+			rotation=(rotation>20?0:rotation);
+
+			transitiontimer=generaterandomno(20,50)/10;
+
+			wrapper.style.marginLeft=x+"px";
+			wrapper.style.marginTop=y+"px";
+			wrapper.style.width=size+"px";
+			wrapper.style.height=size+"px";
+			wrapper.style.transform="rotate("+rotation+"deg)";
+			wrapper.style.webkitTransform="rotate("+rotation+"deg)";		
+			wrapper.style.transition="all "+transitiontimer+"s";	
+			wrapper.style.webkitTransition="all "+transitiontimer+"s";
+
+			wingtimer=generaterandomno(1,5);
+			var upperwings=document.getElementsByClassName("upperwing");
+			var lowerwings=document.getElementsByClassName("lowerwing");
+
+			for (var k=0;k<=1;k++)
+			{
+				upperwings[k].style.animationDuration="0."+wingtimer+"s";
+				upperwings[k].style.webkitAnimationDuration="0."+wingtimer+"s";
+				lowerwings[k].style.animationDuration="0."+wingtimer+"s";
+				lowerwings[k].style.webkitAnimationDuration="0."+wingtimer+"s";		
+			}
+
+			setTimeout(function(){flutter(nexttimer);},vartimer);
+		}
+
+		function generaterandomno(varmin,varmax)
+		{
+			return Math.floor((Math.random() * (varmax-varmin+1)) + varmin);
+		}
+	</script>
+</head>
+
+<body onload="flutter(1500);">
+	<div id="butterfly_wrapper">
+		<div class="leftwings">
+			<div class="perspective">
+				<div class="upperwing upperwing_left">
+
+				</div>
+			</div>
+			<div class="perspective">
+				<div class="lowerwing lowerwing_left">
+
+				</div>
+			</div>
+		</div>
+		<div class="rightwings">
+			<div class="perspective">
+				<div class="upperwing upperwing_right">
+
+				</div>
+			</div>
+			<div class="perspective">
+				<div class="lowerwing lowerwing_right">
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+Plant and pollinator information is from the Pollinator Partnership 'Find Your Roots' tool: https://www.pollinator.org/find-your-roots-tool. Browser Butterfly by Roger Tan (https://github.com/teochewthunder/browserbutterfly).
+
+
+:: Boston shade {"position":"700,375","size":"100,100"}
+If you are planting a shady garden in Boston, good perrenial flowers for you to plant in your polliator garden could be: 
+
+[[Black Cohosh]]
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlQiSbsk5GCV1z5yTO5VkC1l8YnltMbAbeeDvjxC2EUiPMyAZC-VKT8V4&usqp=CAU" alt="Black cohosh grows in a forest." />
+
+or 
+
+[[False Blue Indigo]]
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5jzN-jE-xqIwhBaRQsi03p1ATcHQqyz8AtGZdUKg0dv7lwN6dwrEgtc0&usqp=CAU" alt="Many stalks of false blue indigo grow outside." />
+
+
+
+:: Boston sun {"position":"400,375","size":"100,100"}
+If you are planting a sunny garden in Boston, good perrenial flowers for you to plant in your polliator garden could be: 
+
+[[Swamp Milkweed]]
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqivak_xZStYmerUkYwLNdKd64CJw4Qmb4WgaKoMizOnZIkp8Ol6wM-Q8&usqp=CAU" alt="A single butterfly sits on a pink swamp milkweed bloom" />
+
+or 
+
+[[Sunflowers]]
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgclrFAVvnsP1PEeMJkAK4Sz3jS_0QdJGrisnPcnU&usqp=CAU" alt="Sunflowers grow in pots." />
+
+
+
+:: Boston, MA {"position":"550,300","size":"100,100"}
+Boston is in the Eastern Broadleaf Forest (Oceanic) Province ecoregion. Will your garden be [[sunny|Boston sun]] or [[shady|Boston shade]]?
+
+
+:: Cardinal Catchfly {"position":"875,400","size":"100,100"}
+Great job! By planting cardinal catchfly you helped hummingbirds. 
+
+
+
+<img src="https://cdn.pixabay.com/photo/2022/04/07/11/45/bird-7117346_1280.jpg" alt="Hummingbird in flight." />
+
+
+
+
+
+
+
+Plant and pollinator information is from the Pollinator Partnership 'Find Your Roots' tool: https://www.pollinator.org/find-your-roots-tool. Hummingbird photo by TheOtherKev, Pixabay, https://pixabay.com/photos/bird-ornithology-hummingbird-7117346/. 
+
+
+
+:: False Blue Indigo {"position":"775,525","size":"100,100"}
+Great job! By planting false blue indigo you helped bees. 
+
+
+<img src="https://cdn.pixabay.com/animation/2024/03/13/01/06/01-06-07-149_512.gif" alt="Animated happy bee." />
+
+
+
+
+
+
+
+
+
+
+
+
+Plant and pollinator information is from the Pollinator Partnership 'Find Your Roots' tool: https://www.pollinator.org/find-your-roots-tool. Bee animation by dailyfina, Pixabay, https://pixabay.com/gifs/bee-insect-natural-cartoon-bloom-11531/. 
+
+
+:: Fringe Cups {"position":"950,150","size":"100,100"}
+Great job! By planting fringe cups you helped beetles, hummingbirds, and bees. 
+
+
+
+
+<img src="https://cdn.pixabay.com/photo/2022/04/07/11/45/bird-7117346_1280.jpg" alt="Hummingbird in flight." />
+
+
+
+
+
+
+
+Plant and pollinator information is from the Pollinator Partnership 'Find Your Roots' tool: https://www.pollinator.org/find-your-roots-tool. Hummingbird photo by TheOtherKev, Pixabay, https://pixabay.com/photos/bird-ornithology-hummingbird-7117346/. 
+
+
+
+
+
+:: Mission Woodland-star {"position":"950,25","size":"100,100"}
+Great job! By planting mission woodland-star you helped bees. 
+
+
+
+<img src="https://cdn.pixabay.com/animation/2024/03/13/01/06/01-06-07-149_512.gif" alt="Animated happy bee." />
+
+
+
+
+
+
+
+
+
+
+
+
+Plant and pollinator information is from the Pollinator Partnership 'Find Your Roots' tool: https://www.pollinator.org/find-your-roots-tool. Bee animation by dailyfina, Pixabay, https://pixabay.com/gifs/bee-insect-natural-cartoon-bloom-11531/. 
+
+
+
+
+:: Oakland shade {"position":"775,100","size":"100,100"}
+If you are planting a shady garden in Oakland, good perrenial flowers for you to plant in your polliator garden could be: 
+
+[[Mission Woodland-star]]
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEP2SbpfB4S8X9dfB0aLsdoO_t2TWhd3GrFQ&usqp=CAU" alt="A single yellow mission woodland-star bloom surrounded by many buds." />
+
+or 
+
+[[Fringe Cups]]
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9AMYATVAjWzfYObgVeRJXH4U3t1DBnxf2dGLEiUI9k4Czw6jEaJdmSek&usqp=CAU" alt="Many small yellow fringe cups flowers surrounded by pale green leaves."/>
+
+
+
+:: Oakland sun {"position":"750,250","size":"100,100"}
+If you are planting a sunny garden in Oakland, good perrenial flowers for you to plant in your polliator garden could be: 
+
+[[Pink Sand Verbena]]
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpZG1z-vp3-7nOTSt3dgG0agsVqbDtlegAsA&usqp=CAU" alt="Several clusters of pink sand verbena blooms." />
+
+or 
+
+[[Cardinal Catchfly]]
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKxTEYju_pIBIpd4F0K0iDfSqitQABgw9iDk5vZCQ&usqp=CAU" alt="More than 10 red cardinal catchfly blooms."/>
+
+
+
+:: Oakland, CA {"position":"625,150","size":"100,100"}
+Oakland is in the California Coastal Chapparral Forest and Shrub Province ecoregion. Will your garden be [[sunny|Oakland sun]] or [[shady|Oakland shade]]?
+
+
+:: Pink Sand Verbena {"position":"925,275","size":"100,100"}
+Great job! By planting pink sand verbena you helped bees, flies, butterflies, and moths. 
+
+
+<img src="https://cdn.pixabay.com/animation/2024/03/13/01/06/01-06-07-149_512.gif" alt="Animated happy bee." />
+
+
+
+
+
+
+
+
+
+
+
+
+Plant and pollinator information is from the Pollinator Partnership 'Find Your Roots' tool: https://www.pollinator.org/find-your-roots-tool. Bee animation by dailyfina, Pixabay, https://pixabay.com/gifs/bee-insect-natural-cartoon-bloom-11531/. 
+
+
+
+:: Planting a Garden {"position":"450,150","size":"100,100"}
+You have decided to plant a garden for pollinators. Where will you plant your garden? You can pick [[Boston, MA]] or [[Oakland, CA]].
+
+<img src="https://cdn.pixabay.com/animation/2022/07/29/16/42/16-42-21-375_512.gif" alt="Bee and two blooming flowers." />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Plant and pollinator information is from the Pollinator Partnership 'Find Your Roots' tool: https://www.pollinator.org/find-your-roots-tool. Bee and Blooming Flowers by JuliusH, Pixabay (https://pixabay.com/gifs/flower-blossom-bloom-insect-97/)
+
+
+:: Sunflowers {"position":"475,525","size":"100,100"}
+Great job! By planting sunflowers you helped bees, flies, wasps, beetles, and butterflies. 
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Butterfly</title>
+
+	<style type="text/css">
+		div {border:0px solid #FF0000;}
+
+		#butterfly_wrapper
+		{
+			width:150px;
+			height:150px;
+			position:absolute;
+		}
+
+		.leftwings,.rightwings
+		{
+			position:absolute;
+			width:50%;
+			height:100%;
+			top:0;
+		}
+
+		.leftwings
+		{
+			left:0;
+		}
+
+		.rightwings
+		{
+			right:0;
+		}
+
+		.perspective
+		{
+			position:relative;
+			width:100%;
+			height:50%;
+			-webkit-perspective:300px;
+			-webkit-perspective-origin:50% 50%;			
+			perspective:150px;
+			perspective-origin:50% 50%;
+		}
+
+		.upperwing,.lowerwing
+		{
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#FF4400+0,FFEE00+50,FF4400+100 */
+			background: #FF4400; /* Old browsers */
+			background: -moz-radial-gradient(center, ellipse cover, #FF4400 0%, #FFEE00 50%, #FF4400 100%); /* FF3.6-15 */
+			background: -webkit-radial-gradient(center, ellipse cover, #FF4400 0%,#FFEE00 50%,#FF4400 100%); /* Chrome10-25,Safari5.1-6 */
+			background: radial-gradient(ellipse at center, #FF4400 0%,#FFEE00 50%,#FF4400 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FF4400', endColorstr='#FF4400',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+			-webkit-animation-duration: 0.3s;
+			-webkit-animation-iteration-count: infinite;
+			-webkit-animation-direction: alternate;
+			animation-duration: 0.3s;
+			animation-iteration-count: infinite;
+			animation-direction: alternate;
+		}
+
+		.upperwing
+		{
+			position:absolute;
+			width:100%;
+			height:100%;
+		}
+
+		.upperwing_left
+		{
+			border-top-left-radius: 10%;
+			border-top-right-radius: 80%;
+			border-bottom-right-radius: 0%;
+			border-bottom-left-radius: 30%;
+			-webkit-transform-origin:100% 50%;
+			transform-origin:100% 50%;
+			-webkit-animation-name: movewing_left;
+			animation-name: movewing_left;
+		}
+
+		.upperwing_right
+		{
+			border-top-left-radius: 80%;
+			border-top-right-radius: 10%;
+			border-bottom-right-radius: 30%;
+			border-bottom-left-radius: 0%;
+			-webkit-transform-origin:0% 50%;
+			transform-origin:0% 50%;
+			-webkit-animation-name: movewing_right;
+			animation-name: movewing_right;
+		}
+
+		.lowerwing
+		{
+			position:absolute;
+			top:0;
+			width:80%;
+			height:80%;
+		}
+
+		.lowerwing_left
+		{
+			right:0;
+			border-top-left-radius: 30%;
+			border-top-right-radius: 0%;
+			border-bottom-right-radius: 80%;
+			border-bottom-left-radius: 10%;
+			-webkit-transform-origin:100% 50%;
+			transform-origin:100% 50%;
+			-webkit-animation-name: movewing_left;
+			animation-name: movewing_left;
+		}
+
+		.lowerwing_right
+		{
+			left:0;
+			border-top-left-radius: 0%;
+			border-top-right-radius: 30%;
+			border-bottom-right-radius: 10%;
+			border-bottom-left-radius: 80%;
+			-webkit-transform-origin:0% 50%;
+			transform-origin:0% 50%;
+			-webkit-animation-name: movewing_right;
+			animation-name: movewing_right;
+		}
+
+		@-webkit-keyframes movewing_left{
+			from {-webkit-transform:rotateX(0deg);}
+			to {-webkit-transform:rotateY(65deg);}
+		}
+			
+		@keyframes movewing_left{
+			from {transform:rotateY(0deg);}
+			to {transform:rotateY(65deg);}
+		}
+
+		@-webkit-keyframes movewing_right{
+			from {-webkit-transform:rotateX(0deg);}
+			to {-webkit-transform:rotateY(-65deg);}
+		}
+			
+		@keyframes movewing_right{
+			from {transform:rotateY(0deg);}
+			to {transform:rotateY(-65deg);}
+		}
+	</style>
+
+	<script>
+		var x=0;
+		var y=0;
+		var size=0;
+		var rotation=0;
+		var transitiontimer;
+		var wingtimer;
+		var nexttimer;
+
+		function flutter(vartimer)
+		{
+			var wrapper=document.getElementById("butterfly_wrapper");
+
+			nexttimer=vartimer+(generaterandomno(-200,200));
+			nexttimer=(nexttimer<1500||nexttimer>3000?1500:nexttimer);
+
+			x+=generaterandomno(-80,80);
+			y+=generaterandomno(-80,80);
+
+			x=(x<20?30:x);
+			y=(y<20?30:y);
+			x=(x>250?240:x);
+			y=(y>250?240:y);
+
+			size+=generaterandomno(-10,10);
+			size=(size<10?20:size);
+			size=(size>50?40:size);
+
+			rotation+=generaterandomno(-10,10);
+			rotation=(rotation<-20?0:rotation);
+			rotation=(rotation>20?0:rotation);
+
+			transitiontimer=generaterandomno(20,50)/10;
+
+			wrapper.style.marginLeft=x+"px";
+			wrapper.style.marginTop=y+"px";
+			wrapper.style.width=size+"px";
+			wrapper.style.height=size+"px";
+			wrapper.style.transform="rotate("+rotation+"deg)";
+			wrapper.style.webkitTransform="rotate("+rotation+"deg)";		
+			wrapper.style.transition="all "+transitiontimer+"s";	
+			wrapper.style.webkitTransition="all "+transitiontimer+"s";
+
+			wingtimer=generaterandomno(1,5);
+			var upperwings=document.getElementsByClassName("upperwing");
+			var lowerwings=document.getElementsByClassName("lowerwing");
+
+			for (var k=0;k<=1;k++)
+			{
+				upperwings[k].style.animationDuration="0."+wingtimer+"s";
+				upperwings[k].style.webkitAnimationDuration="0."+wingtimer+"s";
+				lowerwings[k].style.animationDuration="0."+wingtimer+"s";
+				lowerwings[k].style.webkitAnimationDuration="0."+wingtimer+"s";		
+			}
+
+			setTimeout(function(){flutter(nexttimer);},vartimer);
+		}
+
+		function generaterandomno(varmin,varmax)
+		{
+			return Math.floor((Math.random() * (varmax-varmin+1)) + varmin);
+		}
+	</script>
+</head>
+
+<body onload="flutter(1500);">
+	<div id="butterfly_wrapper">
+		<div class="leftwings">
+			<div class="perspective">
+				<div class="upperwing upperwing_left">
+
+				</div>
+			</div>
+			<div class="perspective">
+				<div class="lowerwing lowerwing_left">
+
+				</div>
+			</div>
+		</div>
+		<div class="rightwings">
+			<div class="perspective">
+				<div class="upperwing upperwing_right">
+
+				</div>
+			</div>
+			<div class="perspective">
+				<div class="lowerwing lowerwing_right">
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+Plant and pollinator information is from the Pollinator Partnership 'Find Your Roots' tool: https://www.pollinator.org/find-your-roots-tool. Browser Butterfly by Roger Tan (https://github.com/teochewthunder/browserbutterfly).
+
+
+:: Swamp Milkweed {"position":"325,525","size":"100,100"}
+Great job! By planting swamp milkweed you helped hummingbirds, butterflies, bees. 
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Butterfly</title>
+
+	<style type="text/css">
+		div {border:0px solid #FF0000;}
+
+		#butterfly_wrapper
+		{
+			width:150px;
+			height:150px;
+			position:absolute;
+		}
+
+		.leftwings,.rightwings
+		{
+			position:absolute;
+			width:50%;
+			height:100%;
+			top:0;
+		}
+
+		.leftwings
+		{
+			left:0;
+		}
+
+		.rightwings
+		{
+			right:0;
+		}
+
+		.perspective
+		{
+			position:relative;
+			width:100%;
+			height:50%;
+			-webkit-perspective:300px;
+			-webkit-perspective-origin:50% 50%;			
+			perspective:150px;
+			perspective-origin:50% 50%;
+		}
+
+		.upperwing,.lowerwing
+		{
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#FF4400+0,FFEE00+50,FF4400+100 */
+			background: #FF4400; /* Old browsers */
+			background: -moz-radial-gradient(center, ellipse cover, #FF4400 0%, #FFEE00 50%, #FF4400 100%); /* FF3.6-15 */
+			background: -webkit-radial-gradient(center, ellipse cover, #FF4400 0%,#FFEE00 50%,#FF4400 100%); /* Chrome10-25,Safari5.1-6 */
+			background: radial-gradient(ellipse at center, #FF4400 0%,#FFEE00 50%,#FF4400 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FF4400', endColorstr='#FF4400',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+			-webkit-animation-duration: 0.3s;
+			-webkit-animation-iteration-count: infinite;
+			-webkit-animation-direction: alternate;
+			animation-duration: 0.3s;
+			animation-iteration-count: infinite;
+			animation-direction: alternate;
+		}
+
+		.upperwing
+		{
+			position:absolute;
+			width:100%;
+			height:100%;
+		}
+
+		.upperwing_left
+		{
+			border-top-left-radius: 10%;
+			border-top-right-radius: 80%;
+			border-bottom-right-radius: 0%;
+			border-bottom-left-radius: 30%;
+			-webkit-transform-origin:100% 50%;
+			transform-origin:100% 50%;
+			-webkit-animation-name: movewing_left;
+			animation-name: movewing_left;
+		}
+
+		.upperwing_right
+		{
+			border-top-left-radius: 80%;
+			border-top-right-radius: 10%;
+			border-bottom-right-radius: 30%;
+			border-bottom-left-radius: 0%;
+			-webkit-transform-origin:0% 50%;
+			transform-origin:0% 50%;
+			-webkit-animation-name: movewing_right;
+			animation-name: movewing_right;
+		}
+
+		.lowerwing
+		{
+			position:absolute;
+			top:0;
+			width:80%;
+			height:80%;
+		}
+
+		.lowerwing_left
+		{
+			right:0;
+			border-top-left-radius: 30%;
+			border-top-right-radius: 0%;
+			border-bottom-right-radius: 80%;
+			border-bottom-left-radius: 10%;
+			-webkit-transform-origin:100% 50%;
+			transform-origin:100% 50%;
+			-webkit-animation-name: movewing_left;
+			animation-name: movewing_left;
+		}
+
+		.lowerwing_right
+		{
+			left:0;
+			border-top-left-radius: 0%;
+			border-top-right-radius: 30%;
+			border-bottom-right-radius: 10%;
+			border-bottom-left-radius: 80%;
+			-webkit-transform-origin:0% 50%;
+			transform-origin:0% 50%;
+			-webkit-animation-name: movewing_right;
+			animation-name: movewing_right;
+		}
+
+		@-webkit-keyframes movewing_left{
+			from {-webkit-transform:rotateX(0deg);}
+			to {-webkit-transform:rotateY(65deg);}
+		}
+			
+		@keyframes movewing_left{
+			from {transform:rotateY(0deg);}
+			to {transform:rotateY(65deg);}
+		}
+
+		@-webkit-keyframes movewing_right{
+			from {-webkit-transform:rotateX(0deg);}
+			to {-webkit-transform:rotateY(-65deg);}
+		}
+			
+		@keyframes movewing_right{
+			from {transform:rotateY(0deg);}
+			to {transform:rotateY(-65deg);}
+		}
+	</style>
+
+	<script>
+		var x=0;
+		var y=0;
+		var size=0;
+		var rotation=0;
+		var transitiontimer;
+		var wingtimer;
+		var nexttimer;
+
+		function flutter(vartimer)
+		{
+			var wrapper=document.getElementById("butterfly_wrapper");
+
+			nexttimer=vartimer+(generaterandomno(-200,200));
+			nexttimer=(nexttimer<1500||nexttimer>3000?1500:nexttimer);
+
+			x+=generaterandomno(-80,80);
+			y+=generaterandomno(-80,80);
+
+			x=(x<20?30:x);
+			y=(y<20?30:y);
+			x=(x>250?240:x);
+			y=(y>250?240:y);
+
+			size+=generaterandomno(-10,10);
+			size=(size<10?20:size);
+			size=(size>50?40:size);
+
+			rotation+=generaterandomno(-10,10);
+			rotation=(rotation<-20?0:rotation);
+			rotation=(rotation>20?0:rotation);
+
+			transitiontimer=generaterandomno(20,50)/10;
+
+			wrapper.style.marginLeft=x+"px";
+			wrapper.style.marginTop=y+"px";
+			wrapper.style.width=size+"px";
+			wrapper.style.height=size+"px";
+			wrapper.style.transform="rotate("+rotation+"deg)";
+			wrapper.style.webkitTransform="rotate("+rotation+"deg)";		
+			wrapper.style.transition="all "+transitiontimer+"s";	
+			wrapper.style.webkitTransition="all "+transitiontimer+"s";
+
+			wingtimer=generaterandomno(1,5);
+			var upperwings=document.getElementsByClassName("upperwing");
+			var lowerwings=document.getElementsByClassName("lowerwing");
+
+			for (var k=0;k<=1;k++)
+			{
+				upperwings[k].style.animationDuration="0."+wingtimer+"s";
+				upperwings[k].style.webkitAnimationDuration="0."+wingtimer+"s";
+				lowerwings[k].style.animationDuration="0."+wingtimer+"s";
+				lowerwings[k].style.webkitAnimationDuration="0."+wingtimer+"s";		
+			}
+
+			setTimeout(function(){flutter(nexttimer);},vartimer);
+		}
+
+		function generaterandomno(varmin,varmax)
+		{
+			return Math.floor((Math.random() * (varmax-varmin+1)) + varmin);
+		}
+	</script>
+</head>
+
+<body onload="flutter(1500);">
+	<div id="butterfly_wrapper">
+		<div class="leftwings">
+			<div class="perspective">
+				<div class="upperwing upperwing_left">
+
+				</div>
+			</div>
+			<div class="perspective">
+				<div class="lowerwing lowerwing_left">
+
+				</div>
+			</div>
+		</div>
+		<div class="rightwings">
+			<div class="perspective">
+				<div class="upperwing upperwing_right">
+
+				</div>
+			</div>
+			<div class="perspective">
+				<div class="lowerwing lowerwing_right">
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+Plant and pollinator information is from the Pollinator Partnership 'Find Your Roots' tool: https://www.pollinator.org/find-your-roots-tool. Browser Butterfly by Roger Tan (https://github.com/teochewthunder/browserbutterfly)
+
+
+
+:: StoryStylesheet [stylesheet]
+tw-story {
+  font-family: monaco, monospace, helvetica, sans-serif;
+  font-size:150%;
+  color: green;
+  background-color: white;
+}
